@@ -47,6 +47,22 @@ services:
         networks:
             - laravel-eti
 
+    # phpmyadmin
+    phpmyadmin:
+        build: docker/phpmyadmin
+        environment:
+            PMA_HOST: "${DB_HOST}"
+            PMA_PORT: "${DB_PORT}"
+            PMA_USER: "${DB_USERNAME}"
+            PMA_PASSWORD: "${DB_PASSWORD}"
+            UPLOAD_LIMIT: "20M"
+        ports:
+            - "8085:80"
+        volumes:
+            - .docker/phpmyadmin/data/sessions:/sessions
+        networks:
+            - laravel-eti
+
     # queue
     queue:
         build:
