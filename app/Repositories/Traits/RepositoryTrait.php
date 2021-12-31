@@ -9,6 +9,6 @@ trait RepositoryTrait
 {
     private function getUserAuth(): User
     {
-        return User::first();
+        return auth()->user();
     }
 }
