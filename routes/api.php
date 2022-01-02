@@ -5,12 +5,18 @@ use App\Http\Controllers\Api\{CourseController,
     ModuleController,
     ReplySupportController,
     SupportController};
-use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\{
+    AuthController,
+    ResetPasswordController
+};
 use Illuminate\Support\Facades\Route;
 
 Route::post('/auth', [AuthController::class, 'auth']);
 Route::get('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum']);
 Route::get('/me', [AuthController::class, 'me'])->middleware(['auth:sanctum']);
+
+Route::post('/forgot-password', [ResetPasswordController::class, 'sendLinkReset'])->middleware('guest');
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->middleware('guest');
 
 Route::middleware(['auth:sanctum'])->group(function() {
     Route::get('/courses', [CourseController::class, 'index']);
@@ -20,6 +26,8 @@ Route::middleware(['auth:sanctum'])->group(function() {
     
     Route::get('/modules/{id}/lessons', [LessonController::class, 'index']);
     Route::get('/lessons/{id}', [LessonController::class, 'show']);
+
+    Route::post('/lessons/viewed', [LessonController::class, 'viewed']);
     
     Route::get('/supports/me', [SupportController::class, 'mySupports']);
     Route::get('/supports', [SupportController::class, 'index']);
