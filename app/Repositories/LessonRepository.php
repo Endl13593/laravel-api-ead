@@ -18,12 +18,12 @@ class LessonRepository
 
     public function getLessonsByModuleId(string $moduleId)
     {
-        return $this->entity->where('module_id', '=', $moduleId)->get();
+        return $this->entity->with(['supports.replies', 'views'])->where('module_id', '=', $moduleId)->get();
     }
 
     public function getLesson(string $identify)
     {
-        return $this->entity->findOrFail($identify);
+        return $this->entity->with(['supports.replies', 'views'])->findOrFail($identify);
     }
 
     public function markLessonViewed(string $lessonId)
