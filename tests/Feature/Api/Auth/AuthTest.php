@@ -41,7 +41,7 @@ class AuthTest extends TestCase
 
     public function test_logout()
     {
-        $response = $this->getJson('/logout', [ 'Authorization' => "Bearer {$this->getTokenUserAuth()}" ]);
+        $response = $this->getJson('/logout', $this->defaultHeaders());
 
         $response->assertStatus(200);
     }
@@ -55,7 +55,7 @@ class AuthTest extends TestCase
 
     public function test_get_me()
     {
-        $response = $this->getJson('/me', [ 'Authorization' => "Bearer {$this->getTokenUserAuth()}" ]);
+        $response = $this->getJson('/me', $this->defaultHeaders());
 
         $response->assertStatus(200);
     }
